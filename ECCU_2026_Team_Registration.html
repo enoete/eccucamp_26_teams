@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Studio Registration — ECCU GenAI Camp 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;
+  --navy2:#0d1d35;
+  --navy3:#111f38;
+  --teal:#00C9B1;
+  --coral:#E8573A;
+  --gold:#F0A500;
+  --cream:#F5F0E8;
+  --white:#FFFFFF;
+  --gray:#8892A4;
+  --light:#D1D9E6;
+  --red:#E74C3C;
+  --green:#2ECC71;
+  --font-display:'Bebas Neue',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'Space Mono',monospace;
+
+  /* Team accent colours */
+  --eccb:#FFD100;
+  --scaspa:#00C9B1;
+  --outsource:#2D6A4F;
+  --digicel:#CE1126;
+  --ird:#7B5EA7;
+}
+html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body);min-height:100vh}
+
+/* ── HEADER ── */
+.site-header{
+  background:var(--navy2);
+  border-bottom:1px solid rgba(0,201,177,0.2);
+  padding:28px 40px 24px;
+  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.header-left{}
+.header-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:8px}
+.header-title{font-family:var(--font-display);font-size:clamp(32px,5vw,56px);color:var(--white);line-height:0.95;letter-spacing:1px}
+.header-title span{color:var(--teal)}
+.header-sub{font-family:var(--font-mono);font-size:11px;color:var(--gray);margin-top:8px;letter-spacing:0.5px}
+.save-status{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:6px 14px;border-radius:20px;transition:all 0.3s}
+.save-status.saving{background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.4);color:var(--gold)}
+.save-status.saved{background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.3);color:var(--green)}
+.save-status.error{background:rgba(231,76,60,0.12);border:1px solid rgba(231,76,60,0.3);color:var(--red)}
+
+/* ── TABS ── */
+.tabs-wrapper{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;padding:0 40px}
+.tabs{display:flex;gap:0;min-width:max-content}
+.tab-btn{
+  padding:14px 22px;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--gray);background:none;border:none;
+  border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--light)}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--tab-accent,var(--teal))}
+
+/* ── CONTENT ── */
+.content{max-width:860px;margin:0 auto;padding:36px 40px 80px}
+
+/* ── TEAM HEADER ── */
+.team-header{
+  background:var(--navy2);border-radius:14px;padding:24px 28px;
+  margin-bottom:24px;border:1px solid rgba(255,255,255,0.07);
+  border-top:3px solid var(--team-accent,var(--teal));
+  display:flex;gap:20px;align-items:flex-start;
+}
+.team-flag{font-size:36px;flex-shrink:0}
+.team-header-body{flex:1;min-width:0}
+.team-name-display{font-family:var(--font-display);font-size:32px;color:var(--white);line-height:1;margin-bottom:6px}
+.team-name-placeholder{font-family:var(--font-display);font-size:32px;color:var(--gray);line-height:1;margin-bottom:6px;font-style:italic;opacity:0.5}
+.team-client{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.team-summary{font-size:13px;color:var(--light);line-height:1.7;max-width:560px}
+.add-team-name-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 16px;background:rgba(255,255,255,0.05);
+  border:1px dashed rgba(255,255,255,0.2);border-radius:8px;
+  color:var(--gray);font-family:var(--font-mono);font-size:10px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  transition:all 0.2s;margin-top:10px;
+}
+.add-team-name-btn:hover{border-color:rgba(255,255,255,0.4);color:var(--white)}
+
+/* ── MEMBERS LIST ── */
+.members-section{margin-bottom:24px}
+.members-label{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gray);margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.member-count{
+  background:rgba(255,255,255,0.06);border-radius:20px;
+  padding:2px 10px;font-size:10px;
+}
+.members-list{display:flex;flex-direction:column;gap:8px}
+.member-card{
+  background:var(--navy2);border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;padding:14px 18px;
+  display:flex;align-items:center;gap:14px;
+  transition:border-color 0.15s;
+}
+.member-card:hover{border-color:rgba(255,255,255,0.15)}
+.member-flag{font-size:20px;flex-shrink:0}
+.member-info{flex:1;min-width:0}
+.member-name{font-size:14px;font-weight:600;color:var(--white)}
+.member-country{font-family:var(--font-mono);font-size:10px;color:var(--gray);letter-spacing:0.5px;margin-top:2px}
+.member-edit-btn{
+  padding:5px 12px;background:transparent;
+  border:1px solid rgba(255,255,255,0.12);border-radius:6px;
+  color:var(--gray);font-family:var(--font-mono);font-size:10px;
+  letter-spacing:0.5px;cursor:pointer;transition:all 0.15s;flex-shrink:0;
+}
+.member-edit-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--white)}
+.empty-state{
+  padding:32px;text-align:center;
+  background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);
+  border-radius:10px;
+}
+.empty-icon{font-size:32px;margin-bottom:10px}
+.empty-text{font-size:13px;color:var(--gray);line-height:1.6}
+
+/* ── ADD MEMBER BUTTON ── */
+.add-member-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;
+  background:rgba(0,201,177,0.06);
+  border:1px dashed rgba(0,201,177,0.3);border-radius:10px;
+  color:var(--teal);font-family:var(--font-mono);font-size:11px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  transition:all 0.2s;margin-top:8px;
+}
+.add-member-btn:hover{background:rgba(0,201,177,0.12);border-color:rgba(0,201,177,0.5)}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(5,10,20,0.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:200;padding:20px;backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--navy2);border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;padding:32px;width:100%;max-width:440px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-title{font-family:var(--font-display);font-size:28px;color:var(--white);margin-bottom:6px}
+.modal-sub{font-family:var(--font-mono);font-size:10px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.form-group{margin-bottom:18px}
+.form-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-bottom:8px;display:block}
+.form-input,.form-select{
+  width:100%;padding:11px 14px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);border-radius:8px;
+  color:var(--white);font-family:var(--font-body);font-size:14px;
+  outline:none;transition:border-color 0.2s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-input:focus,.form-select:focus{border-color:rgba(0,201,177,0.5)}
+.form-select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892A4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;cursor:pointer;
+}
+.form-select option{background:var(--navy2);color:var(--white)}
+.form-error{font-size:12px;color:var(--coral);margin-top:5px;display:none}
+.modal-actions{display:flex;gap:10px;margin-top:24px}
+.btn-primary{
+  flex:1;padding:12px;background:var(--teal);border:none;border-radius:8px;
+  color:var(--navy);font-family:var(--font-mono);font-size:11px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;
+}
+.btn-primary:hover{opacity:0.85}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+.btn-secondary{
+  padding:12px 18px;background:transparent;
+  border:1px solid rgba(255,255,255,0.15);border-radius:8px;
+  color:var(--gray);font-family:var(--font-mono);font-size:11px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.3);color:var(--white)}
+
+/* ── TEAM NAME MODAL ── */
+.team-name-modal{max-width:380px}
+
+/* ── LOADING ── */
+.loading-screen{
+  position:fixed;inset:0;background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:300;gap:16px;
+}
+.loading-spinner{
+  width:40px;height:40px;border:3px solid rgba(0,201,177,0.15);
+  border-top-color:var(--teal);border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:var(--font-mono);font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase}
+
+/* ── PANEL ── */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* Country flag mapping helper */
+.country-flag-sm{font-size:16px;margin-right:4px}
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading studio roster...</div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-left">
+    <div class="header-eyebrow">ECCU GenAI & Python Summer Camp 2026</div>
+    <div class="header-title">STUDIO<br><span>REGISTRATION</span></div>
+    <div class="header-sub">Find your team · Add your name · Represent your island</div>
+  </div>
+  <div class="save-status saved" id="saveStatus">All changes saved</div>
+</header>
+
+<!-- Tabs -->
+<div class="tabs-wrapper">
+  <div class="tabs" id="tabsContainer">
+    <button class="tab-btn active" onclick="switchTab('eccb',this)" style="--tab-accent:#FFD100">🇰🇳 ECCB</button>
+    <button class="tab-btn" onclick="switchTab('scaspa',this)" style="--tab-accent:#00C9B1">🇰🇳 SCASPA</button>
+    <button class="tab-btn" onclick="switchTab('outsource',this)" style="--tab-accent:#2ECC71">🇩🇲 Outsource</button>
+    <button class="tab-btn" onclick="switchTab('ird',this)" style="--tab-accent:#7B5EA7">🇬🇩 IRD Grenada</button>
+    <button class="tab-btn" onclick="switchTab('cub',this)" style="--tab-accent:#CE1126">🇦🇬 Caribbean Union Bank</button>
+    <button class="tab-btn" onclick="switchTab('irdanguilla',this)" style="--tab-accent:#0072C6">🇦🇮 IRD Anguilla</button>
+  </div>
+</div>
+
+<!-- Tab Panels -->
+<div class="content">
+
+  <!-- ECCB -->
+  <div class="tab-panel active" id="panel-eccb">
+    <div class="team-header" style="--team-accent:#FFD100">
+      <div class="team-flag">🇰🇳</div>
+      <div class="team-header-body">
+        <div id="eccb-name-display"></div>
+        <div class="team-client" style="color:#FFD100">ECCB / Credit Bureau · St. Kitts & Nevis</div>
+        <div class="team-summary">A public awareness campaign explaining credit reporting to every Caribbean citizen — what it is, how it affects your life, and how to take control of it. Animation, motion graphics, social reels.</div>
+        <button class="add-team-name-btn" id="eccb-name-btn" onclick="openNameModal('eccb')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="eccb-count">0 members</span>
+      </div>
+      <div class="members-list" id="eccb-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('eccb')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+  <!-- SCASPA -->
+  <div class="tab-panel" id="panel-scaspa">
+    <div class="team-header" style="--team-accent:#00C9B1">
+      <div class="team-flag">🇰🇳</div>
+      <div class="team-header-body">
+        <div id="scaspa-name-display"></div>
+        <div class="team-client" style="color:#00C9B1">SCASPA · St. Christopher Air & Sea Ports Authority · St. Kitts</div>
+        <div class="team-summary">A cinematic brand film for the gateway to St. Kitts & Nevis — by sea and by air. Showcasing the full scope of SCASPA's operations: aviation, maritime, cargo, cruise, and national pride.</div>
+        <button class="add-team-name-btn" id="scaspa-name-btn" onclick="openNameModal('scaspa')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="scaspa-count">0 members</span>
+      </div>
+      <div class="members-list" id="scaspa-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('scaspa')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+  <!-- OUTSOURCE -->
+  <div class="tab-panel" id="panel-outsource">
+    <div class="team-header" style="--team-accent:#2D6A4F">
+      <div class="team-flag">🇩🇲</div>
+      <div class="team-header-body">
+        <div id="outsource-name-display"></div>
+        <div class="team-client" style="color:#2ECC71">Outsource Development Studio · Dominica</div>
+        <div class="team-summary">A people-centered brand story for a Dominica consultancy with 15+ years of experience making businesses better. The real ask: show the human side of expertise. Cinematic, warm, authentic.</div>
+        <button class="add-team-name-btn" id="outsource-name-btn" onclick="openNameModal('outsource')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="outsource-count">0 members</span>
+      </div>
+      <div class="members-list" id="outsource-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('outsource')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+    <!-- IRD -->
+  <div class="tab-panel" id="panel-ird">
+    <div class="team-header" style="--team-accent:#7B5EA7">
+      <div class="team-flag">🇬🇩</div>
+      <div class="team-header-body">
+        <div id="ird-name-display"></div>
+        <div class="team-client" style="color:#7B5EA7">Inland Revenue Division · Grenada · Ministry of Finance</div>
+        <div class="team-summary">A public education campaign making tax compliance feel relevant, approachable, and civic for every Grenadian. Animation, infographics, social reels. GTax front and centre.</div>
+        <button class="add-team-name-btn" id="ird-name-btn" onclick="openNameModal('ird')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="ird-count">0 members</span>
+      </div>
+      <div class="members-list" id="ird-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('ird')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+
+  <!-- CUB -->
+  <div class="tab-panel" id="panel-cub">
+    <div class="team-header" style="--team-accent:#CE1126">
+      <div class="team-flag">🇦🇬</div>
+      <div class="team-header-body">
+        <div id="cub-name-display"></div>
+        <div class="team-client" style="color:#CE1126">Caribbean Union Bank · Antigua & Barbuda</div>
+        <div class="team-summary">A full-service brand film repositioning Caribbean Union Bank as Antigua's 24/7 community banking partner — real people, real moments, cinematic storytelling that builds trust and drives digital adoption.</div>
+        <button class="add-team-name-btn" id="cub-name-btn" onclick="openNameModal('cub')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="cub-count">0 members</span>
+      </div>
+      <div class="members-list" id="cub-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('cub')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+  <!-- IRD ANGUILLA -->
+  <div class="tab-panel" id="panel-irdanguilla">
+    <div class="team-header" style="--team-accent:#0072C6">
+      <div class="team-flag">🇦🇮</div>
+      <div class="team-header-body">
+        <div id="irdanguilla-name-display"></div>
+        <div class="team-client" style="color:#0072C6">Inland Revenue Department · Anguilla · Government of Anguilla</div>
+        <div class="team-summary">A public awareness campaign making tax and licensing services accessible to every Anguillian — animation, motion graphics, and social reels that modernise the IRD's image and extend its reach beyond the Gazette.</div>
+        <button class="add-team-name-btn" id="irdanguilla-name-btn" onclick="openNameModal('irdanguilla')">✏ Add team name</button>
+      </div>
+    </div>
+    <div class="members-section">
+      <div class="members-label">
+        <span>Team Members</span>
+        <span class="member-count" id="irdanguilla-count">0 members</span>
+      </div>
+      <div class="members-list" id="irdanguilla-members"></div>
+      <button class="add-member-btn" onclick="openAddModal('irdanguilla')">＋ &nbsp;Add your name to this team</button>
+    </div>
+  </div>
+
+</div><!-- end content -->
+
+<!-- Add / Edit Member Modal -->
+<div class="modal-overlay" id="memberModal">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">Join the team</div>
+    <div class="modal-sub" id="modalSub">Add your name to this team</div>
+
+    <div class="form-group">
+      <label class="form-label">First Name</label>
+      <input class="form-input" id="inputFn" type="text" placeholder="e.g. Jahari" autocomplete="given-name"/>
+      <div class="form-error" id="errorFn">Please enter your first name</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Last Name</label>
+      <input class="form-input" id="inputLn" type="text" placeholder="e.g. Francis" autocomplete="family-name"/>
+      <div class="form-error" id="errorLn">Please enter your last name</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Country</label>
+      <select class="form-select" id="inputCountry">
+        <option value="">Select your country...</option>
+        <option value="Anguilla 🇦🇮">Anguilla 🇦🇮</option>
+        <option value="Antigua and Barbuda 🇦🇬">Antigua and Barbuda 🇦🇬</option>
+        <option value="Dominica 🇩🇲">Dominica 🇩🇲</option>
+        <option value="Grenada 🇬🇩">Grenada 🇬🇩</option>
+        <option value="Montserrat 🇲🇸">Montserrat 🇲🇸</option>
+        <option value="Saint Kitts and Nevis 🇰🇳">Saint Kitts and Nevis 🇰🇳</option>
+        <option value="Saint Lucia 🇱🇨">Saint Lucia 🇱🇨</option>
+        <option value="Saint Vincent and the Grenadines 🇻🇨">Saint Vincent and the Grenadines 🇻🇨</option>
+      </select>
+      <div class="form-error" id="errorCountry">Please select your country</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('memberModal')">Cancel</button>
+      <button class="btn-primary" id="modalSubmitBtn" onclick="submitMember()">Add me to the team</button>
+    </div>
+  </div>
+</div>
+
+<!-- Team Name Modal -->
+<div class="modal-overlay" id="nameModal">
+  <div class="modal team-name-modal">
+    <div class="modal-title">Name your team</div>
+    <div class="modal-sub" id="nameModalSub">Choose something bold</div>
+
+    <div class="form-group">
+      <label class="form-label">Team Name</label>
+      <input class="form-input" id="inputTeamName" type="text" placeholder="e.g. Studio Zephyr" maxlength="40"/>
+      <div class="form-error" id="errorTeamName">Please enter a team name</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('nameModal')">Cancel</button>
+      <button class="btn-primary" onclick="submitTeamName()">Set team name</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────
+const BIN_ID   = '6a4b4286da38895dfe335fe9';
+const API_URL  = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const MASTER_KEY = '$2a$10$YdbExlb2BaD00NW/hIKjcOXwJR/0mx3D/.vsZ62yW6gUFVqNlUQyO';
+const HEADERS  = {
+  'Content-Type': 'application/json',
+  'X-Master-Key': MASTER_KEY,
+  'X-Bin-Meta': 'false'
+};
+
+const TEAMS = ['eccb', 'scaspa', 'outsource', 'ird', 'cub', 'irdanguilla'];
+
+// App state
+let state = {};
+let currentTeam = null;
+let editingMemberId = null;
+let saveTimer = null;
+
+// ── INIT ────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch(`${API_URL}/latest`, { headers: HEADERS });
+    const data = await res.json();
+    const record = data.record || data;
+
+    // Load existing registration data or initialise
+    state = record.registration || {};
+    TEAMS.forEach(t => {
+      if (!state[t]) state[t] = { teamName: '', members: [] };
+    });
+
+    renderAll();
+  } catch(e) {
+    console.error('Load error:', e);
+    // Initialise empty state
+    TEAMS.forEach(t => { state[t] = { teamName: '', members: [] }; });
+    renderAll();
+  }
+  document.getElementById('loadingScreen').style.display = 'none';
+}
+
+// ── RENDER ──────────────────────────────────────────────────────
+function renderAll() {
+  TEAMS.forEach(renderTeam);
+}
+
+function renderTeam(teamId) {
+  const team = state[teamId] || { teamName: '', members: [] };
+
+  // Team name display
+  const nameDisplay = document.getElementById(`${teamId}-name-display`);
+  const nameBtn     = document.getElementById(`${teamId}-name-btn`);
+  if (team.teamName) {
+    nameDisplay.innerHTML = `<div class="team-name-display">${escHtml(team.teamName)}</div>`;
+    nameBtn.style.display = 'none';
+  } else {
+    nameDisplay.innerHTML = `<div class="team-name-placeholder">Unnamed Team</div>`;
+    nameBtn.style.display = 'flex';
+  }
+
+  // Members
+  const membersList = document.getElementById(`${teamId}-members`);
+  const countEl     = document.getElementById(`${teamId}-count`);
+  const members = team.members || [];
+
+  countEl.textContent = `${members.length} member${members.length !== 1 ? 's' : ''}`;
+
+  if (members.length === 0) {
+    membersList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🎬</div>
+        <div class="empty-text">No team members yet.<br>Be the first to join this team.</div>
+      </div>`;
+    return;
+  }
+
+  membersList.innerHTML = members.map((m, idx) => `
+    <div class="member-card">
+      <div class="member-flag">${countryFlag(m.country)}</div>
+      <div class="member-info">
+        <div class="member-name">${escHtml(m.fn)} ${escHtml(m.ln)}</div>
+        <div class="member-country">${escHtml(m.country)}</div>
+      </div>
+      <button class="member-edit-btn" onclick="openEditModal('${teamId}', ${idx})">Edit</button>
+    </div>`).join('');
+}
+
+function countryFlag(country) {
+  const flags = {
+    'Anguilla': '🇦🇮', 'Antigua and Barbuda': '🇦🇬',
+    'Dominica': '🇩🇲', 'Grenada': '🇬🇩',
+    'Montserrat': '🇲🇸', 'Saint Kitts and Nevis': '🇰🇳',
+    'Saint Lucia': '🇱🇨', 'Saint Vincent and the Grenadines': '🇻🇨'
+  };
+  for (const [name, flag] of Object.entries(flags)) {
+    if (country && country.includes(name)) return flag;
+  }
+  return '🌍';
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── TABS ────────────────────────────────────────────────────────
+function switchTab(teamId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`panel-${teamId}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── ADD MEMBER MODAL ────────────────────────────────────────────
+function openAddModal(teamId) {
+  currentTeam = teamId;
+  editingMemberId = null;
+  document.getElementById('modalTitle').textContent = 'Join the team';
+  document.getElementById('modalSub').textContent = `Adding to ${teamId.toUpperCase()} team`;
+  document.getElementById('modalSubmitBtn').textContent = 'Add me to the team';
+  clearForm();
+  document.getElementById('memberModal').classList.add('open');
+  setTimeout(() => document.getElementById('inputFn').focus(), 100);
+}
+
+function openEditModal(teamId, idx) {
+  currentTeam = teamId;
+  editingMemberId = idx;
+  const m = state[teamId].members[idx];
+  document.getElementById('modalTitle').textContent = 'Edit your details';
+  document.getElementById('modalSub').textContent = `${teamId.toUpperCase()} team`;
+  document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+  document.getElementById('inputFn').value = m.fn || '';
+  document.getElementById('inputLn').value = m.ln || '';
+  document.getElementById('inputCountry').value = m.country || '';
+  clearErrors();
+  document.getElementById('memberModal').classList.add('open');
+  setTimeout(() => document.getElementById('inputFn').focus(), 100);
+}
+
+function clearForm() {
+  document.getElementById('inputFn').value = '';
+  document.getElementById('inputLn').value = '';
+  document.getElementById('inputCountry').value = '';
+  clearErrors();
+}
+
+function clearErrors() {
+  ['errorFn','errorLn','errorCountry'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+}
+
+async function submitMember() {
+  const fn      = document.getElementById('inputFn').value.trim();
+  const ln      = document.getElementById('inputLn').value.trim();
+  const country = document.getElementById('inputCountry').value;
+  let valid = true;
+
+  if (!fn) { document.getElementById('errorFn').style.display = 'block'; valid = false; }
+  else { document.getElementById('errorFn').style.display = 'none'; }
+  if (!ln) { document.getElementById('errorLn').style.display = 'block'; valid = false; }
+  else { document.getElementById('errorLn').style.display = 'none'; }
+  if (!country) { document.getElementById('errorCountry').style.display = 'block'; valid = false; }
+  else { document.getElementById('errorCountry').style.display = 'none'; }
+
+  if (!valid) return;
+
+  const btn = document.getElementById('modalSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  if (editingMemberId !== null) {
+    state[currentTeam].members[editingMemberId] = { fn, ln, country };
+  } else {
+    state[currentTeam].members.push({ fn, ln, country, id: Date.now() });
+  }
+
+  await save();
+  renderTeam(currentTeam);
+  closeModal('memberModal');
+  btn.disabled = false;
+  btn.textContent = editingMemberId !== null ? 'Save changes' : 'Add me to the team';
+}
+
+// ── TEAM NAME MODAL ─────────────────────────────────────────────
+function openNameModal(teamId) {
+  currentTeam = teamId;
+  const teamLabels = {eccb:'ECCB',scaspa:'SCASPA',outsource:'Outsource Dev',ird:'IRD Grenada',cub:'Caribbean Union Bank',irdanguilla:'IRD Anguilla'};
+  document.getElementById('nameModalSub').textContent = (teamLabels[teamId] || teamId.toUpperCase()) + ' team';
+  document.getElementById('inputTeamName').value = state[teamId].teamName || '';
+  document.getElementById('errorTeamName').style.display = 'none';
+  document.getElementById('nameModal').classList.add('open');
+  setTimeout(() => document.getElementById('inputTeamName').focus(), 100);
+}
+
+async function submitTeamName() {
+  const name = document.getElementById('inputTeamName').value.trim();
+  if (!name) {
+    document.getElementById('errorTeamName').style.display = 'block';
+    return;
+  }
+  state[currentTeam].teamName = name;
+  await save();
+  renderTeam(currentTeam);
+  closeModal('nameModal');
+}
+
+// ── MODAL CLOSE ─────────────────────────────────────────────────
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ── SAVE ────────────────────────────────────────────────────────
+async function save() {
+  setStatus('saving', 'Saving...');
+  try {
+    // First get current bin data to preserve other keys
+    const getRes = await fetch(`${API_URL}/latest`, { headers: HEADERS });
+    const getData = await getRes.json();
+    const currentRecord = getData.record || getData;
+
+    // Merge registration data
+    const updatedRecord = { ...currentRecord, registration: state };
+
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: HEADERS,
+      body: JSON.stringify(updatedRecord)
+    });
+
+    if (res.ok) {
+      setStatus('saved', 'All changes saved');
+    } else {
+      setStatus('error', 'Save failed — try again');
+    }
+  } catch(e) {
+    setStatus('error', 'Connection error');
+    console.error('Save error:', e);
+  }
+}
+
+function setStatus(type, text) {
+  const el = document.getElementById('saveStatus');
+  el.className = `save-status ${type}`;
+  el.textContent = text;
+}
+
+// ── KEYBOARD ────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  }
+  if (e.key === 'Enter') {
+    if (document.getElementById('memberModal').classList.contains('open')) submitMember();
+    if (document.getElementById('nameModal').classList.contains('open')) submitTeamName();
+  }
+});
+
+// ── START ────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
