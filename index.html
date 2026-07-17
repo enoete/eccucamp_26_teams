@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Studio Registration — ECCU GenAI Camp 2026</title>
+<title>Studio Teams — ECCU GenAI Camp 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -216,17 +216,17 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 <!-- Loading screen -->
 <div class="loading-screen" id="loadingScreen">
   <div class="loading-spinner"></div>
-  <div class="loading-text">Loading studio roster...</div>
+  <div class="loading-text">Loading teams...</div>
 </div>
 
 <!-- Header -->
 <header class="site-header">
   <div class="header-left">
     <div class="header-eyebrow">ECCU GenAI & Python Summer Camp 2026</div>
-    <div class="header-title">STUDIO<br><span>REGISTRATION</span></div>
-    <div class="header-sub">Find your team · Add your name · Represent your island</div>
+    <div class="header-title">STUDIO<br><span>TEAMS</span></div>
+    <div class="header-sub">Five teams. Six clients. One studio.</div>
   </div>
-  <div class="save-status saved" id="saveStatus">All changes saved</div>
+  <div class="save-status saved" id="saveStatus">Saved</div>
 </header>
 
 <!-- Tabs -->
@@ -252,7 +252,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="eccb-name-display"></div>
         <div class="team-client" style="color:#FFD100">ECCB / Credit Bureau · St. Kitts & Nevis</div>
         <div class="team-summary">A public awareness campaign explaining credit reporting to every Caribbean citizen — what it is, how it affects your life, and how to take control of it. Animation, motion graphics, social reels.</div>
-        <button class="add-team-name-btn" id="eccb-name-btn" onclick="openNameModal('eccb')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="eccb-name-btn" onclick="openNameModal('eccb')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -261,7 +261,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="eccb-count">0 members</span>
       </div>
       <div class="members-list" id="eccb-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('eccb')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('eccb')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -273,7 +273,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="scaspa-name-display"></div>
         <div class="team-client" style="color:#00C9B1">SCASPA · St. Christopher Air & Sea Ports Authority · St. Kitts</div>
         <div class="team-summary">A cinematic brand film for the gateway to St. Kitts & Nevis — by sea and by air. Showcasing the full scope of SCASPA's operations: aviation, maritime, cargo, cruise, and national pride.</div>
-        <button class="add-team-name-btn" id="scaspa-name-btn" onclick="openNameModal('scaspa')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="scaspa-name-btn" onclick="openNameModal('scaspa')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -282,7 +282,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="scaspa-count">0 members</span>
       </div>
       <div class="members-list" id="scaspa-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('scaspa')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('scaspa')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -294,7 +294,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="outsource-name-display"></div>
         <div class="team-client" style="color:#2ECC71">Outsource Development Studio · Dominica</div>
         <div class="team-summary">A people-centered brand story for a Dominica consultancy with 15+ years of experience making businesses better. The real ask: show the human side of expertise. Cinematic, warm, authentic.</div>
-        <button class="add-team-name-btn" id="outsource-name-btn" onclick="openNameModal('outsource')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="outsource-name-btn" onclick="openNameModal('outsource')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -303,7 +303,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="outsource-count">0 members</span>
       </div>
       <div class="members-list" id="outsource-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('outsource')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('outsource')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -315,7 +315,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="ird-name-display"></div>
         <div class="team-client" style="color:#7B5EA7">Inland Revenue Division · Grenada · Ministry of Finance</div>
         <div class="team-summary">A public education campaign making tax compliance feel relevant, approachable, and civic for every Grenadian. Animation, infographics, social reels. GTax front and centre.</div>
-        <button class="add-team-name-btn" id="ird-name-btn" onclick="openNameModal('ird')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="ird-name-btn" onclick="openNameModal('ird')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -324,7 +324,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="ird-count">0 members</span>
       </div>
       <div class="members-list" id="ird-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('ird')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('ird')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -337,7 +337,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="cub-name-display"></div>
         <div class="team-client" style="color:#CE1126">Caribbean Union Bank · Antigua & Barbuda</div>
         <div class="team-summary">A full-service brand film repositioning Caribbean Union Bank as Antigua's 24/7 community banking partner — real people, real moments, cinematic storytelling that builds trust and drives digital adoption.</div>
-        <button class="add-team-name-btn" id="cub-name-btn" onclick="openNameModal('cub')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="cub-name-btn" onclick="openNameModal('cub')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -346,7 +346,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="cub-count">0 members</span>
       </div>
       <div class="members-list" id="cub-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('cub')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('cub')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -358,7 +358,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <div id="irdanguilla-name-display"></div>
         <div class="team-client" style="color:#0072C6">Inland Revenue Department · Anguilla · Government of Anguilla</div>
         <div class="team-summary">A public awareness campaign making tax and licensing services accessible to every Anguillian — animation, motion graphics, and social reels that modernise the IRD's image and extend its reach beyond the Gazette.</div>
-        <button class="add-team-name-btn" id="irdanguilla-name-btn" onclick="openNameModal('irdanguilla')">✏ Add team name</button>
+        <button class="add-team-name-btn" id="irdanguilla-name-btn" onclick="openNameModal('irdanguilla')">✏ Set team name</button>
       </div>
     </div>
     <div class="members-section">
@@ -367,7 +367,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="irdanguilla-count">0 members</span>
       </div>
       <div class="members-list" id="irdanguilla-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('irdanguilla')">＋ &nbsp;Add your name to this team</button>
+      <button class="add-member-btn" onclick="openAddModal('irdanguilla')">＋ &nbsp;Add member</button>
     </div>
   </div>
 
@@ -376,8 +376,8 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 <!-- Add / Edit Member Modal -->
 <div class="modal-overlay" id="memberModal">
   <div class="modal">
-    <div class="modal-title" id="modalTitle">Join the team</div>
-    <div class="modal-sub" id="modalSub">Add your name to this team</div>
+    <div class="modal-title" id="modalTitle">Add team member</div>
+    <div class="modal-sub" id="modalSub">Enter member details</div>
 
     <div class="form-group">
       <label class="form-label">First Name</label>
@@ -409,7 +409,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('memberModal')">Cancel</button>
-      <button class="btn-primary" id="modalSubmitBtn" onclick="submitMember()">Add me to the team</button>
+      <button class="btn-primary" id="modalSubmitBtn" onclick="submitMember()">Add member</button>
     </div>
   </div>
 </div>
@@ -417,8 +417,8 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 <!-- Team Name Modal -->
 <div class="modal-overlay" id="nameModal">
   <div class="modal team-name-modal">
-    <div class="modal-title">Name your team</div>
-    <div class="modal-sub" id="nameModalSub">Choose something bold</div>
+    <div class="modal-title">Set team name</div>
+    <div class="modal-sub" id="nameModalSub">Camp admin only</div>
 
     <div class="form-group">
       <label class="form-label">Team Name</label>
@@ -505,7 +505,7 @@ function renderTeam(teamId) {
     membersList.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🎬</div>
-        <div class="empty-text">No team members yet.<br>Be the first to join this team.</div>
+        <div class="empty-text">No members added yet.</div>
       </div>`;
     return;
   }
@@ -550,9 +550,9 @@ function switchTab(teamId, btn) {
 function openAddModal(teamId) {
   currentTeam = teamId;
   editingMemberId = null;
-  document.getElementById('modalTitle').textContent = 'Join the team';
-  document.getElementById('modalSub').textContent = `Adding to ${teamId.toUpperCase()} team`;
-  document.getElementById('modalSubmitBtn').textContent = 'Add me to the team';
+  document.getElementById('modalTitle').textContent = 'Add team member';
+  document.getElementById('modalSub').textContent = `${teamLabels[teamId] || teamId.toUpperCase()}`;
+  document.getElementById('modalSubmitBtn').textContent = 'Add member';
   clearForm();
   document.getElementById('memberModal').classList.add('open');
   setTimeout(() => document.getElementById('inputFn').focus(), 100);
@@ -615,7 +615,7 @@ async function submitMember() {
   renderTeam(currentTeam);
   closeModal('memberModal');
   btn.disabled = false;
-  btn.textContent = editingMemberId !== null ? 'Save changes' : 'Add me to the team';
+  btn.textContent = editingMemberId !== null ? 'Save changes' : 'Add member';
 }
 
 // ── TEAM NAME MODAL ─────────────────────────────────────────────
@@ -672,7 +672,7 @@ async function save() {
     });
 
     if (res.ok) {
-      setStatus('saved', 'All changes saved');
+      setStatus('saved', 'Saved');
     } else {
       setStatus('error', 'Save failed — try again');
     }
