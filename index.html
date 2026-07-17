@@ -530,9 +530,11 @@ function renderTeam(teamId) {
   const nameBtn     = document.getElementById(`${teamId}-name-btn`);
   if (team.teamName) {
     nameDisplay.innerHTML = `<div class="team-name-display">${escHtml(team.teamName)}</div>`;
-    nameBtn.style.display = 'none';
+    nameBtn.textContent = '✏ Edit team name';
+    nameBtn.style.display = 'flex';
   } else {
     nameDisplay.innerHTML = `<div class="team-name-placeholder">Unnamed Team</div>`;
+    nameBtn.textContent = '✏ Set team name';
     nameBtn.style.display = 'flex';
   }
 
