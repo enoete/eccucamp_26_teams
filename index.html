@@ -411,6 +411,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 <div class="modal-overlay" id="memberModal">
   <div class="modal">
     <div class="modal-title" id="modalTitle">Add team member</div>
+    <div id="modalTeamBadge" style="display:inline-block;padding:4px 12px;border-radius:20px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;background:rgba(0,201,177,0.12);color:var(--teal);border:1px solid rgba(0,201,177,0.3)"></div>
     <div class="modal-sub" id="modalSub">Enter member details</div>
 
     <div class="form-group">
@@ -561,7 +562,10 @@ function renderTeam(teamId) {
         <div class="member-name">${escHtml(m.fn)} ${escHtml(m.ln)}</div>
         <div class="member-country">${escHtml(m.country)}</div>
       </div>
-      <button class="member-edit-btn" onclick="openEditModal('${teamId}', ${idx})">Edit</button>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+        <button class="member-edit-btn" onclick="openEditModal('${teamId}', ${idx})">Edit</button>
+        <button class="member-edit-btn" style="color:var(--coral);border-color:rgba(232,87,58,0.3)" onclick="deleteMember('${teamId}', ${idx})">✕</button>
+      </div>
     </div>`).join('');
 }
 
@@ -606,8 +610,9 @@ function openEditModal(teamId, idx) {
   currentTeam = teamId;
   editingMemberId = idx;
   const m = state[teamId].members[idx];
-  document.getElementById('modalTitle').textContent = 'Edit your details';
-  document.getElementById('modalSub').textContent = `${teamId.toUpperCase()} team`;
+  document.getElementById('modalTitle').textContent = 'Edit member';
+  document.getElementById('modalTeamBadge').textContent = '→ ' + (TEAM_LABELS[teamId] || teamId.toUpperCase());
+  document.getElementById('modalSub').textContent = 'Update member details';
   document.getElementById('modalSubmitBtn').textContent = 'Save changes';
   document.getElementById('inputFn').value = m.fn || '';
   document.getElementById('inputLn').value = m.ln || '';
@@ -682,6 +687,16 @@ async function submitTeamName() {
   await save();
   renderTeam(currentTeam);
   closeModal('nameModal');
+}
+
+
+// ── DELETE MEMBER ────────────────────────────────────────────────
+async function deleteMember(teamId, idx) {
+  const m = state[teamId].members[idx];
+  if (!confirm(`Remove ${m.fn} ${m.ln} from ${TEAM_LABELS[teamId]}?`)) return;
+  state[teamId].members.splice(idx, 1);
+  await save();
+  renderTeam(teamId);
 }
 
 // ── MODAL CLOSE ─────────────────────────────────────────────────
