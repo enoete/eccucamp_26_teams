@@ -489,11 +489,17 @@ const TEAM_LABELS = {
   irdanguilla: 'IRD Anguilla'
 };
 
-// App state
-let state = {};
+// App state — initialised with empty shells so it's never undefined
+let state = {
+  eccb:       { teamName: '', members: [] },
+  scaspa:     { teamName: '', members: [] },
+  outsource:  { teamName: '', members: [] },
+  ird:        { teamName: '', members: [] },
+  cub:        { teamName: '', members: [] },
+  irdanguilla:{ teamName: '', members: [] }
+};
 let currentTeam = null;
 let editingMemberId = null;
-let saveTimer = null;
 
 // ── INIT ────────────────────────────────────────────────────────
 // Keep a copy of the full bin record so we don't lose other keys on save
@@ -506,10 +512,17 @@ async function init() {
     const data = await res.json();
     fullRecord = data.record || data;
 
-    // Load registration data — never wipe if missing, just add empty shells
+    // Deep merge saved data into state — preserve existing structure
     const saved = fullRecord.registration || {};
     TEAMS.forEach(t => {
-      state[t] = saved[t] || { teamName: '', members: [] };
+      if (saved[t]) {
+        // Only update if saved data has actual content
+        state[t] = {
+          teamName: saved[t].teamName || '',
+          members: Array.isArray(saved[t].members) ? saved[t].members : []
+        };
+      }
+      // If not in saved, keep the empty shell already in state
     });
 
     renderAll();
@@ -664,14 +677,18 @@ async function submitMember() {
   if (editingMemberId !== null) {
     state[currentTeam].members[editingMemberId] = { fn, ln, country };
   } else {
+    if (!Array.isArray(state[currentTeam].members)) {
+      state[currentTeam].members = [];
+    }
     state[currentTeam].members.push({ fn, ln, country, id: Date.now() });
   }
 
+  const savedBtn = btn;
   await save();
   renderTeam(currentTeam);
   closeModal('memberModal');
-  btn.disabled = false;
-  btn.textContent = editingMemberId !== null ? 'Save changes' : 'Add member';
+  savedBtn.disabled = false;
+  savedBtn.textContent = editingMemberId !== null ? 'Save changes' : 'Add member';
 }
 
 // ── TEAM NAME MODAL ─────────────────────────────────────────────
@@ -722,21 +739,25 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 async function save() {
   setStatus('saving', 'Saving...');
   try {
-    // Merge current state into the full record we loaded at init
-    // No second fetch — avoids race conditions and stale overwrites
-    const updatedRecord = { ...fullRecord, registration: state };
+    // Build the payload — merge registration into full record
+    const payload = { ...fullRecord, registration: JSON.parse(JSON.stringify(state)) };
+    console.log('Saving registration:', JSON.stringify(payload.registration).substring(0, 200));
 
     const res = await fetch(API_URL, {
       method: 'PUT',
       headers: HEADERS,
-      body: JSON.stringify(updatedRecord)
+      body: JSON.stringify(payload)
     });
 
     if (res.ok) {
-      // Update our local copy so subsequent saves stay in sync
-      fullRecord = updatedRecord;
-      setStatus('saved', 'Saved');
+      const saved = await res.json();
+      // Update fullRecord from what was actually saved
+      fullRecord = saved.record || payload;
+      setStatus('saved', 'Saved ✓');
+      console.log('Save confirmed');
     } else {
+      const errText = await res.text();
+      console.error('Save failed:', errText);
       setStatus('error', 'Save failed — try again');
     }
   } catch(e) {
