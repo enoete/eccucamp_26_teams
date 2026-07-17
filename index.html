@@ -479,6 +479,14 @@ const HEADERS  = {
 };
 
 const TEAMS = ['eccb', 'scaspa', 'outsource', 'ird', 'cub', 'irdanguilla'];
+const TEAM_LABELS = {
+  eccb: 'ECCB / Credit Bureau',
+  scaspa: 'SCASPA',
+  outsource: 'Outsource Dev',
+  ird: 'IRD Grenada',
+  cub: 'Caribbean Union Bank',
+  irdanguilla: 'IRD Anguilla'
+};
 
 // App state
 let state = {};
@@ -585,7 +593,7 @@ function openAddModal(teamId) {
   currentTeam = teamId;
   editingMemberId = null;
   document.getElementById('modalTitle').textContent = 'Add team member';
-  document.getElementById('modalSub').textContent = `${teamLabels[teamId] || teamId.toUpperCase()}`;
+  document.getElementById('modalSub').textContent = TEAM_LABELS[teamId] || teamId.toUpperCase();
   document.getElementById('modalSubmitBtn').textContent = 'Add member';
   clearForm();
   document.getElementById('memberModal').classList.add('open');
@@ -655,8 +663,7 @@ async function submitMember() {
 // ── TEAM NAME MODAL ─────────────────────────────────────────────
 function openNameModal(teamId) {
   currentTeam = teamId;
-  const teamLabels = {eccb:'ECCB',scaspa:'SCASPA',outsource:'Outsource Dev',ird:'IRD Grenada',cub:'Caribbean Union Bank',irdanguilla:'IRD Anguilla'};
-  document.getElementById('nameModalSub').textContent = (teamLabels[teamId] || teamId.toUpperCase()) + ' team';
+  document.getElementById('nameModalSub').textContent = (TEAM_LABELS[teamId] || teamId.toUpperCase()) + ' team';
   document.getElementById('inputTeamName').value = state[teamId].teamName || '';
   document.getElementById('errorTeamName').style.display = 'none';
   document.getElementById('nameModal').classList.add('open');
