@@ -496,24 +496,31 @@ let editingMemberId = null;
 let saveTimer = null;
 
 // ── INIT ────────────────────────────────────────────────────────
+// Keep a copy of the full bin record so we don't lose other keys on save
+let fullRecord = {};
+
 async function init() {
   try {
     const res = await fetch(`${API_URL}/latest`, { headers: HEADERS });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    const record = data.record || data;
+    fullRecord = data.record || data;
 
-    // Load existing registration data or initialise
-    state = record.registration || {};
+    // Load registration data — never wipe if missing, just add empty shells
+    const saved = fullRecord.registration || {};
     TEAMS.forEach(t => {
-      if (!state[t]) state[t] = { teamName: '', members: [] };
+      state[t] = saved[t] || { teamName: '', members: [] };
     });
 
     renderAll();
   } catch(e) {
     console.error('Load error:', e);
-    // Initialise empty state
-    TEAMS.forEach(t => { state[t] = { teamName: '', members: [] }; });
+    // Do NOT wipe state — just show whatever we have
+    TEAMS.forEach(t => {
+      if (!state[t]) state[t] = { teamName: '', members: [] };
+    });
     renderAll();
+    setStatus('error', 'Could not load — check connection');
   }
   document.getElementById('loadingScreen').style.display = 'none';
 }
@@ -715,13 +722,9 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 async function save() {
   setStatus('saving', 'Saving...');
   try {
-    // First get current bin data to preserve other keys
-    const getRes = await fetch(`${API_URL}/latest`, { headers: HEADERS });
-    const getData = await getRes.json();
-    const currentRecord = getData.record || getData;
-
-    // Merge registration data
-    const updatedRecord = { ...currentRecord, registration: state };
+    // Merge current state into the full record we loaded at init
+    // No second fetch — avoids race conditions and stale overwrites
+    const updatedRecord = { ...fullRecord, registration: state };
 
     const res = await fetch(API_URL, {
       method: 'PUT',
@@ -730,6 +733,8 @@ async function save() {
     });
 
     if (res.ok) {
+      // Update our local copy so subsequent saves stay in sync
+      fullRecord = updatedRecord;
       setStatus('saved', 'Saved');
     } else {
       setStatus('error', 'Save failed — try again');
