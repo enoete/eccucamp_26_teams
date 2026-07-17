@@ -733,6 +733,12 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// ── ACTIVE TEAM HELPER ──────────────────────────────────────────
+function currentActiveTeam() {
+  const active = document.querySelector('.tab-panel.active');
+  return active ? active.id.replace('panel-', '') : 'eccb';
+}
+
 // ── START ────────────────────────────────────────────────────────
 init();
 </script>
