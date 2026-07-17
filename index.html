@@ -209,6 +209,37 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
 
 /* Country flag mapping helper */
 .country-flag-sm{font-size:16px;margin-right:4px}
+
+/* ── STICKY ADD BUTTON ── */
+.sticky-add{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:150;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 22px;
+  background:var(--teal);
+  border:none;
+  border-radius:50px;
+  color:var(--navy);
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:0 4px 24px rgba(0,201,177,0.35);
+  transition:all 0.2s;
+}
+.sticky-add:hover{
+  background:#00e6ca;
+  box-shadow:0 6px 32px rgba(0,201,177,0.5);
+  transform:translateY(-2px);
+}
+.sticky-add:active{transform:translateY(0)}
+.sticky-add-icon{font-size:18px;line-height:1}
 </style>
 </head>
 <body>
@@ -261,7 +292,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="eccb-count">0 members</span>
       </div>
       <div class="members-list" id="eccb-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('eccb')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -282,7 +313,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="scaspa-count">0 members</span>
       </div>
       <div class="members-list" id="scaspa-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('scaspa')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -303,7 +334,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="outsource-count">0 members</span>
       </div>
       <div class="members-list" id="outsource-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('outsource')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -324,7 +355,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="ird-count">0 members</span>
       </div>
       <div class="members-list" id="ird-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('ird')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -346,7 +377,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="cub-count">0 members</span>
       </div>
       <div class="members-list" id="cub-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('cub')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -367,7 +398,7 @@ html,body{background:var(--navy);color:var(--cream);font-family:var(--font-body)
         <span class="member-count" id="irdanguilla-count">0 members</span>
       </div>
       <div class="members-list" id="irdanguilla-members"></div>
-      <button class="add-member-btn" onclick="openAddModal('irdanguilla')">＋ &nbsp;Add member</button>
+      
     </div>
   </div>
 
@@ -702,5 +733,12 @@ document.addEventListener('keydown', e => {
 // ── START ────────────────────────────────────────────────────────
 init();
 </script>
+
+<!-- Sticky Add Member Button -->
+<button class="sticky-add" id="stickyAddBtn" onclick="openAddModal(currentActiveTeam())">
+  <span class="sticky-add-icon">＋</span>
+  Add member
+</button>
+
 </body>
 </html>
